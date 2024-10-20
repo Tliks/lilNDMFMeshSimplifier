@@ -1,5 +1,7 @@
 using jp.lilxyzw.ndmfmeshsimplifier.runtime;
 using UnityEditor;
+using UnityEngine;
+using nadena.dev.ndmf.preview;
 
 namespace jp.lilxyzw.ndmfmeshsimplifier
 {
@@ -7,6 +9,12 @@ namespace jp.lilxyzw.ndmfmeshsimplifier
     [CanEditMultipleObjects]
     internal class NDMFMeshSimplifierEditor : Editor
     {
+        private TogglablePreviewNode m_toggleNode;
+        private void OnEnable()
+        {
+            m_toggleNode = NDMF.PreviewNDMFMeshSimplifier.ToggleNode;
+        }
+
         public sealed override void OnInspectorGUI()
         {
             L10n.SelectLanguageGUI();
@@ -19,6 +27,10 @@ namespace jp.lilxyzw.ndmfmeshsimplifier
                 EditorGUILayout.PropertyField(iterator, L10n.G(iterator));
             }
             serializedObject.ApplyModifiedProperties();
+            if (GUILayout.Button(m_toggleNode.IsEnabled.Value ? "Stop Preview" : "Preview"))
+            {
+                m_toggleNode.IsEnabled.Value = !m_toggleNode.IsEnabled.Value;
+            }
         }
     }
 }

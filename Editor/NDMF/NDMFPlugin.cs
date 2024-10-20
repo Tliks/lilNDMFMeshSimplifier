@@ -55,6 +55,23 @@ namespace jp.lilxyzw.ndmfmeshsimplifier.NDMF
 
     internal class PreviewNDMFMeshSimplifier : IRenderFilter
     {
+
+        public static TogglablePreviewNode ToggleNode = TogglablePreviewNode.Create(
+            () => "lilNDMFMeshSimplifier",
+            qualifiedName: "jp.lilxyzw.ndmfmeshsimplifier.NDMF/lilNDMFMeshSimplifier",
+            true
+        );
+        
+        public IEnumerable<TogglablePreviewNode> GetPreviewControlNodes()
+        {
+            yield return ToggleNode;
+        }
+
+        public bool IsEnabled(ComputeContext context)
+        {
+            return context.Observe(ToggleNode.IsEnabled);
+        }
+
         public ImmutableList<RenderGroup> GetTargetGroups(ComputeContext context)
         {
             return context.GetComponentsByType<NDMFMeshSimplifier>()
