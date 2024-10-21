@@ -9,10 +9,12 @@ namespace jp.lilxyzw.ndmfmeshsimplifier
     [CanEditMultipleObjects]
     internal class NDMFMeshSimplifierEditor : Editor
     {
+        private NDMFMeshSimplifier _target;
         private TogglablePreviewNode m_toggleNode;
         private void OnEnable()
         {
             m_toggleNode = NDMF.PreviewNDMFMeshSimplifier.ToggleNode;
+            _target = target as NDMFMeshSimplifier;
         }
 
         public sealed override void OnInspectorGUI()
@@ -30,6 +32,15 @@ namespace jp.lilxyzw.ndmfmeshsimplifier
             if (GUILayout.Button(m_toggleNode.IsEnabled.Value ? "Stop Preview" : "Preview"))
             {
                 m_toggleNode.IsEnabled.Value = !m_toggleNode.IsEnabled.Value;
+            }
+            
+            if (m_toggleNode.IsEnabled.Value)
+            {
+                EditorGUILayout.LabelField($"Triangles", $"{_target.Triangles.Item2}/{_target.Triangles.Item1}");
+            }
+            else
+            {
+                EditorGUILayout.LabelField($"Triangles", $"- / - (works during only Preview)");
             }
         }
     }

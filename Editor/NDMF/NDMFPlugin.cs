@@ -101,7 +101,9 @@ namespace jp.lilxyzw.ndmfmeshsimplifier.NDMF
             if (mesh == null) { return null; }
             context.Observe(ndmfMeshSimplifier);
             context.Observe(mesh);
+            
             var simplifiedMesh = NDMFPlugin.Simplify(ndmfMeshSimplifier, mesh);
+            ndmfMeshSimplifier.Triangles = (mesh.triangles.Count() / 3, simplifiedMesh.triangles.Count() / 3);
             return Task.FromResult<IRenderFilterNode>(new MeshSimplifierNode(simplifiedMesh));
         }
 
