@@ -82,8 +82,9 @@ namespace jp.lilxyzw.ndmfmeshsimplifier.NDMF
                     }
             }
             if (mesh == null) { return null; }
-            context.Observe(ndmfMeshSimplifier);
-            context.Observe(mesh);
+            context.Observe(ndmfMeshSimplifier, component => component.quality);
+            context.Observe(ndmfMeshSimplifier, component => component.options, (a, b) => a.Equals(b));
+            
             var simplifiedMesh = NDMFPlugin.Simplify(ndmfMeshSimplifier, mesh);
             return Task.FromResult<IRenderFilterNode>(new MeshSimplifierNode(simplifiedMesh));
         }
