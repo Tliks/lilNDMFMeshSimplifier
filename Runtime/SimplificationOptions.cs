@@ -118,5 +118,19 @@ namespace jp.lilxyzw.ndmfmeshsimplifier.runtime
         /// </summary>
         [Range(0, 4), Tooltip("The UV component count. The same UV component count will be used on all UV channels.")]
         public int UVComponentCount;
+
+        public bool Equals(SimplificationOptions other)
+        {
+            return PreserveBorderEdges == other.PreserveBorderEdges &&
+                PreserveUVSeamEdges == other.PreserveUVSeamEdges &&
+                PreserveUVFoldoverEdges == other.PreserveUVFoldoverEdges &&
+                PreserveSurfaceCurvature == other.PreserveSurfaceCurvature &&
+                EnableSmartLink == other.EnableSmartLink &&
+                VertexLinkDistance.Equals(other.VertexLinkDistance) &&
+                MaxIterationCount == other.MaxIterationCount &&
+                Agressiveness.Equals(other.Agressiveness) &&
+                ManualUVComponentCount == other.ManualUVComponentCount &&
+                UVComponentCount == other.UVComponentCount;
+        }
     }
 }
